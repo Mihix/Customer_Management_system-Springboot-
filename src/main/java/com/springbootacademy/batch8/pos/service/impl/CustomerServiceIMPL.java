@@ -111,4 +111,25 @@ public class CustomerServiceIMPL implements CustomerService {
 
     }
 
+    @Override
+    public List<CustomerDTO> getAllCustomersByActivestate(boolean activeState) {
+        List <Customer> getAllCustomers = customerRepo.findAllByActiveEquals(activeState);//it has 10 data
+
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
+
+        for (Customer customer:getAllCustomers){
+            CustomerDTO customerDTO = new CustomerDTO(
+                    customer.getCustomerid(),
+                    customer.getCustomerName(),
+                    customer.getCustomerAddress(),
+                    customer.getCustomerSalary(),
+                    customer.getContactNumber(),
+                    customer.getNic(),
+                    customer.isActive()
+            );
+            customerDTOList.add(customerDTO);
+        }
+        return customerDTOList;
+    }
+
 }
