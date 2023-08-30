@@ -4,7 +4,10 @@ import com.springbootacademy.batch8.pos.dto.CustomerDTO;
 import com.springbootacademy.batch8.pos.dto.request.CustomerUpdateDTO;
 import com.springbootacademy.batch8.pos.service.CustomerService;
 import com.springbootacademy.batch8.pos.service.impl.CustomerServiceIMPL;
+import com.springbootacademy.batch8.pos.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,12 +42,25 @@ public class CustomerController {
         CustomerDTO customerDTO = customerService.getCustomerById(customerId);
         return customerDTO;
     }
+//    @GetMapping(
+//            path = "get-all-customers"
+//    )
+//    public List<CustomerDTO> getAllCustomers(){
+//        List<CustomerDTO> allCustomers = customerService.getAllCustomers();
+//        return allCustomers;
+//
+//    }
     @GetMapping(
             path = "get-all-customers"
     )
-    public List<CustomerDTO> getAllCustomers(){
+    public ResponseEntity<StandardResponse> getAllCustomers(){
         List<CustomerDTO> allCustomers = customerService.getAllCustomers();
-        return allCustomers;
+
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,"Successfull",allCustomers),
+                HttpStatus.OK
+
+        );
 
     }
     @DeleteMapping(
@@ -63,6 +79,7 @@ public class CustomerController {
         return allCustomers;
 
     }
+
 
 
 }
